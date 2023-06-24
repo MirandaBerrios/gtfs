@@ -35,11 +35,13 @@ public class MainServiceImpl implements MainService {
             ObjectMapper om = new ObjectMapper();
             log.info("STARTING TO ANALYZE API GOB");
             ResponseEntity<Root> responsePure = gtfs.getAllGTFS();
+            log.info("STATUS CODE FROM GOB.CL : {}", responsePure.getHeaders());
+            log.info("FULL RESPONSE : {}", om.writeValueAsString(responsePure)); 
             responsePure.getBody().getResult().getResources().forEach( item -> {
                 urlStringList.add(item.getUrl());
             });
 
-            System.err.println( "cantidad " +  urlStringList.size());
+            log.info( "cantidad " +  urlStringList.size());
             System.err.println( om.writeValueAsString(urlStringList));
             listUrls = urlStringList;
             log.info("HAS BEEN GETTING {} urls", Integer.toString(urlStringList.size()));
